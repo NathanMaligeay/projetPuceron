@@ -41,8 +41,8 @@ void mortTomate(Tomate* tomate);
 
 
 //Fonctions relatives aux pucerons
-void deplacementPuceron(Puceron* puceron) ;
-/*Direction donnée jusqu’à ce qu’ils ne trouvent plus de tomates, auquel cas ils se dirigeront dans une case attenante au hasard contenant une tomate. Si ils n’en trouvent pas, ils se d´eplaceront sur une case au hasard.*/
+void directionPuceron(Puceron* puceron) ;
+/*Prend en entrée un pointeur sur un objet de type Puceron et adapte la direction de celui-ci en fonction des tomates présentes dans l'environnement direct de celui-ci (=les cases attenantes à la case dans laquelle se trouve le puceron). La direction reste inchangée si une tomate mûre se trouve dans la case attenante indiquée par cette direction. Si il n'y a pas de tomates dans cette direction auquel cas ils se dirigeront dans une case attenante au hasard contenant une tomate. Si ils n’en trouvent pas, ils se d´eplaceront sur une case au hasard.*/
 
 void vieillissementPuceron(Puceron* puceron);
 void reproductionPuceron(Puceron* puceron);
