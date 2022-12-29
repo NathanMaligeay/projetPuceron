@@ -2,8 +2,8 @@
 #define simulation
 
 typedef struct Coordonnee {
-    int abscisse;
-    int ordonnee;
+    int x;
+    int y;
 } Coordonnee;
 
 typedef struct Case {
@@ -12,17 +12,13 @@ typedef struct Case {
     Coccinelle* coccinelleCase;
 } Case;
 
+Case Potager[30][30];
+
 typedef struct Tomate {
     Coordonnees coordTomates;
     int etatCroissance;
 } Tomate;
 
-typedef struct Puceron {
-    Coordonnees coordPuceron;
-    int compteurReproduction;    
-    int compteurVie;
-    int direction;
-} Puceron;
 
 typedef struct Coccinelle {
     Coordonnees coordCoccinelle;
@@ -40,17 +36,12 @@ void mortTomate(Tomate* tomate);
 /*Prend en entrée un pointeur sur un objet de type Tomate et met son état de croissance à 0.*/
 
 
-//Fonctions relatives aux pucerons
-void directionPuceron(Puceron* puceron) ;
-/*Prend en entrée un pointeur sur un objet de type Puceron et adapte la direction de celui-ci en fonction des tomates présentes dans l'environnement direct de celui-ci (=les cases attenantes à la case dans laquelle se trouve le puceron). La direction reste inchangée si une tomate mûre se trouve dans la case attenante indiquée par cette direction. Si il n'y a pas de tomates dans cette direction auquel cas ils se dirigeront dans une case attenante au hasard contenant une tomate. Si ils n’en trouvent pas, ils se d´eplaceront sur une case au hasard.*/
-
-void vieillissementPuceron(Puceron* puceron);
-void reproductionPuceron(Puceron* puceron);
-void mortPuceron(Puceron* puceron);
-
 
 //Fonctions relatives aux coccinelles
 void deplacementCoccinelle(Coccinelle* coccinelle);
 void vieillissementCoccinelle(Coccinelle* coccinelle);
 void reproductionCoccinelle(Coccinelle* coccinelle);
 void mortCoccinelle(Coccinelle* coccinelle);
+
+
+# endif
