@@ -1,16 +1,12 @@
 #ifndef simulation
 #define simulation
 
-typedef struct Coordonnee {
-    int abscisse;
-    int ordonnee;
-} Coordonnee;
+#include<stdio.h>
 
-typedef struct Case {
-    Tomate* tomateCase;
-    Puceron* puceronCase;
-    Coccinelle* coccinelleCase;
-} Case;
+typedef struct Coordonnees {
+    int x;
+    int y;
+} Coordonnees;
 
 typedef struct Tomate {
     Coordonnees coordTomates;
@@ -30,6 +26,12 @@ typedef struct Coccinelle {
     int compteurVie;
     int direction;
 } Coccinelle;
+
+typedef struct Case {
+    Tomate* tomateCase;
+    Puceron* puceronCase;
+    Coccinelle* coccinelleCase;
+} Case;
 
 
 //Fonctions relatives aux tomates
@@ -54,3 +56,8 @@ void deplacementCoccinelle(Coccinelle* coccinelle);
 void vieillissementCoccinelle(Coccinelle* coccinelle);
 void reproductionCoccinelle(Coccinelle* coccinelle);
 void mortCoccinelle(Coccinelle* coccinelle);
+
+//Fonction d'affichage du potager
+void affichage(int n, int p, Case potager[n][p]);
+
+# endif

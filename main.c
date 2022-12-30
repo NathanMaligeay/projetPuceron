@@ -1,28 +1,22 @@
-#include <stdio.h>
+#include "simulation.h"
 
 
 
 int main() {
-	for(int i=0; i<29; i++) {
-		for (int j=0; j<30; j++) {
-			if(j!=29){
-				printf("_O|");
-			}
-			else{
-				printf("_O");
-			}
+	Case potager[30][30];
+	for(int i=0; i<30; i++){
+		for(int j=0; j<30; j++){
+			//(*potager[i][j].tomateCase) = {{i,j},20};
+			(*potager[i][j].tomateCase).coordTomates.x = i;
+			(*potager[i][j].tomateCase).coordTomates.y = j;
+			(*potager[i][j].tomateCase).etatCroissance = 20;
+			potager[i][j].puceronCase = NULL;
+			potager[i][j].coccinelleCase =NULL;
 		}
-		printf("\n");
 	}
-	for (int j=0; j<30; j++) {
-		if(j!=29){
-			printf(" O|");
-		}
-		else{
-			printf(" O");
-		}
-	} 
-	printf("\n");
+	/*affichage(30,30,potager);
+	printf("\n");*/
+	return 0;
 }
 
 
