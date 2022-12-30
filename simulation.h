@@ -17,14 +17,14 @@ typedef struct Puceron {
     Coordonnees coordPuceron;
     int compteurReproduction;    
     int compteurVie;
-    int direction;
+    char direction;
 } Puceron;
 
 typedef struct Coccinelle {
     Coordonnees coordCoccinelle;
     int compteurReproduction;
     int compteurVie;
-    int direction;
+    char direction;
 } Coccinelle;
 
 typedef struct Case {
