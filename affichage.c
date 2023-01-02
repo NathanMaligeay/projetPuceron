@@ -1,6 +1,22 @@
 #include "simulation.h"
 
-void affichage(int n, int p, Case potager[n][p]){
+void affichageInsecte(int logo){
+	if ((logo == 1)||(logo == 9)){
+		printf(" \\");
+	}else if ((logo == 3)||(logo == 7)){
+		printf(" /");
+	}else if (logo == 2){
+		printf(" Ʌ");
+	}else if (logo == 4) {
+		printf(" <");
+	}else if (logo == 6){
+		printf(" >");
+	}else if (logo == 8){
+		printf(" V");
+	}
+}
+
+void affichagePotager(int n, int p, Case potager[n][p]){
 	printf("\n");
 	for(int i=0; i<n; i++) {
 	//Affichage de chaque ligne du potager
@@ -20,12 +36,12 @@ void affichage(int n, int p, Case potager[n][p]){
 			//Affichage de l'éventuel puceron/coccinelle en fonction de sa direction
 			if (potager[i][j].puceronCase != NULL){
 				printf("\033[%sm","32"); //met la couleur du texte en vert dans une console linux
-				printf(" %c",(*potager[i][j].puceronCase).direction);
+				affichageInsecte((*potager[i][j].puceronCase).direction);
 				printf("\033[%sm","0"); //réinitialise le système de couleur de la console linux
 				
 			}else if (potager[i][j].coccinelleCase != NULL){
 				printf("\033[%sm","31"); //met la couleur du texte en rouge
-				printf(" %c",(*potager[i][j].coccinelleCase).direction);
+				affichageInsecte((*potager[i][j].coccinelleCase).direction);
 				printf("\033[%sm","0"); //réinitialise le système de couleur
 				
 			}else{

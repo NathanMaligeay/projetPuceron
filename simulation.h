@@ -17,14 +17,14 @@ typedef struct Puceron {
     Coordonnees coordPuceron;
     int compteurReproduction;    
     int compteurVie;
-    char direction;
+    int direction;
 } Puceron;
 
 typedef struct Coccinelle {
     Coordonnees coordCoccinelle;
     int compteurReproduction;
     int compteurVie;
-    char direction;
+    int direction;
 } Coccinelle;
 
 typedef struct Case {
@@ -58,6 +58,7 @@ void reproductionCoccinelle(Coccinelle* coccinelle);
 void mortCoccinelle(Coccinelle* coccinelle);
 
 //Fonction d'affichage du potager
-void affichage(int n, int p, Case potager[n][p]);
+void affichageInsecte(int logo);
+void affichagePotager(int n, int p, Case potager[n][p]);
 
 # endif
