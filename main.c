@@ -1,28 +1,23 @@
-#include <stdio.h>
-
+#include "simulation.h"
 
 
 int main() {
-	for(int i=0; i<29; i++) {
-		for (int j=0; j<30; j++) {
-			if(j!=29){
-				printf("_O|");
-			}
-			else{
-				printf("_O");
-			}
-		}
-		printf("\n");
-	}
-	for (int j=0; j<30; j++) {
-		if(j!=29){
-			printf(" O|");
-		}
-		else{
-			printf(" O");
-		}
-	} 
-	printf("\n");
+
+	Case potager[30][30];
+
+	Puceron tab[900];
+
+	Tomate t1 = {{0,0},4};
+	Puceron p1 = {{0,0},3,8,1,1};
+
+	ensemblePuceron ensPuc = {tab, 1};
+	
+
+	potager[0][0].puceronCase = &p1 ;
+	potager[0][0].tomateCase = &t1 ;
+
+	
+
 }
 
 
