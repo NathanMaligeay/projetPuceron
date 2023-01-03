@@ -161,3 +161,93 @@ void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case 
     (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;// corrige le nombre de puceron total dans l'ensemble Puceron
     potager[puceron.coordPuceron.x][puceron.coordPuceron.y].puceronCase = NULL;
 };
+
+void traduction_DirectionCoordonnees(int dir, int* n, int* p){
+	if (dir<4){
+		*n = (*n)-1;
+	}else if (dir>6){
+		*n = (*n)+1;
+	}
+
+	if ((dir == 1)||(dir == 4)||(dir == 7)){
+		*p = (*p)-1;
+	}else if ((dir == 3)||(dir == 6)||(dir == 9)){
+		*p = (*p)+1;
+	}
+}
+
+int presenceTomateMangeableDirection(Puceron puceron, int dir, int i, int j, Case potager[i][j]){
+	int n = puceron.coordPuceron.x;
+	int p = puceron.coordPuceron.y;
+
+	traduction_DirectionCoordonnees(dir, &n, &p);
+
+	if ((n>=0) && (n<i) && (p>=0) && (p<j) && ((*potager[n][p].tomateCase).etatCroissance > 4)){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+int presenceInsecteDirection(Puceron puceron, int dir, int i, int j, Case potager[i][j]){
+	int n = puceron.coordPuceron.x;
+	int p = puceron.coordPuceron.y;
+
+	traduction_DirectionCoordonnees(dir, &n, &p);
+
+	if ((n>=0) && (n<i) && (p>=0) && (p<j) && (potager[n][p].puceronCase == NULL) && (potager[n][p].coccinelleCase == NULL)){
+		return 0;
+	}else{
+		return 1;
+	}
+}
+
+
+void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
+	int dir = (*puceron).direction;
+	
+	if ((presenceTomateMangeableDirection((*puceron),dir,i,j,potager) == 0)||(presenceInsecteDirection((*puceron),dir,i,j,potager)==1)){
+	//Si il n'y a pas de tomates ds la direction ou qu'un insecte est déjà sur la case, alors on cherche ds les cases attenantes
+		int testDir=1;
+		int c=0;
+		while ((c<8)&&((presenceTomateMangeableDirection((*puceron),testDir,i,j,potager)==0)||(presenceInsecteDirection((*puceron),testDir,i,j,potager)==1))){ 
+		//tant qu'on a pas pas dépassé le nb max de directions possibles, et qu'il n'y a pas de tomate mûre trouvée, on continue la boucle
+			testDir ++;
+			if (testDir==5){
+				testDir ++;
+			}
+			c++;
+		}
+		if (testDir<10){
+			(*puceron).direction = testDir;
+		}else{
+			testDir=1;
+			c=0;
+			while ((c<8)&&(presenceInsecteDirection((*puceron),testDir,i,j,potager)==1)){ 
+			//tant qu'on a pas pas dépassé le nb max de directions possibles, et qu'il n'y a pas de case sans insecte trouvée, on continue la boucle
+				testDir ++;
+				if (testDir==5){
+					testDir ++;
+				}
+				c++;
+			}
+			if (testDir<10){
+				(*puceron).direction = testDir;
+			}
+		}
+	}
+}
+
+void deplacementPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
+
+	printf("Ancienne position puceron : (%d,%d)\n",(*puceron).coordPuceron.x,(*puceron).coordPuceron.y);
+	directionPuceron(puceron, i, j, potager);
+	
+	if (presenceInsecteDirection((*puceron),(*puceron).direction,i,j,potager)==0){
+		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = NULL;
+		traduction_DirectionCoordonnees((*puceron).direction, &((*puceron).coordPuceron.x), &((*puceron).coordPuceron.y));
+		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = puceron;
+	}
+	
+	printf("Nouvelle position puceron : (%d,%d)\n",(*puceron).coordPuceron.x,(*puceron).coordPuceron.y);
+}

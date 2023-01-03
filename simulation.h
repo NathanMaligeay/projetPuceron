@@ -48,7 +48,7 @@ typedef struct Case
 {
     Tomate *tomateCase;
     Puceron *puceronCase;
-    /* Coccinelle *coccinelleCase; */
+    Coccinelle *coccinelleCase;
 } Case;
 
 // Fonctions relatives aux tomates
@@ -80,7 +80,20 @@ void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int
 
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
-// void directionPuceron(ensemblePuceron *ensPuc, Puceron *puceron);
-/*Prend en entrée un pointeur sur un objet de type Puceron et adapte la direction de celui-ci en fonction des tomates présentes dans l'environnement direct de celui-ci (=les cases attenantes à la case dans laquelle se trouve le puceron). La direction reste inchangée si une tomate mûre se trouve dans la case attenante indiquée par cette direction. Si il n'y a pas de tomates dans cette direction auquel cas ils se dirigeront dans une case attenante au hasard contenant une tomate. Si ils n’en trouvent pas, ils se d´eplaceront sur une case au hasard.*/
+void traduction_DirectionCoordonnees(int dir, int* n, int* p);
+/**/
+
+int presenceTomateMangeableDirection(Puceron puceron, int dir, int i, int j, Case potager[i][j]);
+/*Teste la présence d'une tomate "mangeable" dans une direction donnée, en prenant comme point d'origine un autre puceron. Si une tomate "non-mangeable" est présente sur cette case, ou que la direction indiquée est en-dehors du potager, retourne 0, sinon retourne 1.*/
+
+int presenceInsecteDirection(Puceron puceron, int dir, int i, int j, Case potager[i][j]);
+/*Teste la présence d'un insecte dans une direction donnée, en prenant comme point d'origine un puceron. Si un insecte est présent sur cette case, ou que la direction indiquée est en-dehors du potager, retourne 0, sinon retourne 1.*/
+
+void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);
+/*Prend en entrée un pointeur sur un objet de type Puceron et adapte la direction de celui-ci en fonction des tomates présentes dans l'environnement direct de celui-ci (=les cases attenantes à la case dans laquelle se trouve le puceron). La direction reste inchangée si une tomate "mangeable" se trouve dans la case attenante indiquée par cette direction et qu'il n'y a pas d'insecte sur cette case, ou bien si le puceron ne peut se déplacer sur aucune des cases qui l'entourent. Si il n'y a pas de tomate mangeable dans cette direction (ou qu'il y a un insecte sur cette case) alors cette fonction donne la direction indiquant la prochaine case attenante avec tomate mangeable et absence d'insecte. Si il n'y en a pas, la fonction donne la direction indiquant la prochaine case attenante avec absence d'insecte. */
+
+void deplacementPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);
+/*Prend en entrée un pointeur sur un objet de type Puceron, met à jour la direction de celui-ci, puis modifie sa position.*/
+
 
 #endif
