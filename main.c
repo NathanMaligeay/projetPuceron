@@ -10,27 +10,32 @@ int main()
 
 
 	Tomate t1 = {{0, 0}, 6}; //6 est le stade de pousse du tomate
-	Puceron p1 = {{0, 0}, 5, 8, 1, 1}; //5 est compteur reproduction, 8 de vie
+	Tomate t2 = {{0,1},2};
+	Puceron p1 = {{0,0}, 5, 8, 1, 0}; //5 est compteur reproduction, 8 de vie
+	Puceron p2 = {{0,1}, 2, 10, 1, 1};
+
 
 	tab[0] = p1; 
-
+	tab[1] = p2;
 
 	ensemblePuceron ensPuc;
 	ensPuc.tab[0] = tab[0];
-	ensPuc.nbPuceron = 1;
-	printf("compteur vie puceron %d\n", ensPuc.tab[0].compteurVie);	
+	ensPuc.tab[1] = tab[1];
+	ensPuc.nbPuceron = 2;
 
 	potager[0][0].puceronCase = &p1;
 	potager[0][0].tomateCase = &t1;
+	potager[0][1].puceronCase = &p2;
+	potager[0][1].tomateCase = &t2;
 
-	printf("compteur repro %d\n", p1.compteurReproduction);
-	printf("nb puceron %d\n",ensPuc.nbPuceron);
-	printf("direction du vieux puceron %d\n", ensPuc.tab[0].direction);
-	reproductionPuceron(&p1, &ensPuc, 30, 30, potager);
-	printf("compteur repro %d\n", p1.compteurReproduction);
-	printf("nb puceron %d\n",ensPuc.nbPuceron);
-	printf("direction du nv puceron %d\n", ensPuc.tab[1].direction);
-	printf("direction du vieux puceron %d\n", ensPuc.tab[0].direction);
+	printf(" vie puceron qui va vieillir %d\n", ensPuc.tab[0].compteurVie);
+	printf("nb puceron dans l'ensemble %d\n", ensPuc.nbPuceron);
+
+
+	vieillissementPuceron((&ensPuc.tab[0]), &ensPuc, 30,30,potager);
+
+	printf("vie puceron qui a vieilli %d\n", ensPuc.tab[0].compteurVie);	
+	printf("nb puceron dans ensemble %d\n", ensPuc.nbPuceron);
 
 
 	return 0;

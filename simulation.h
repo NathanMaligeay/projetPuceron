@@ -69,9 +69,12 @@ void mortCoccinelle(Coccinelle *coccinelle);
 
 void mangeTomate(Tomate *tomate, Puceron *puceron);
 
+int testBordure(int n, int p, int i, int j, Case potager[i][j]);
+
+
 void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
-void ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
+int ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
