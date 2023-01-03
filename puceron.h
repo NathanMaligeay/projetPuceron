@@ -15,9 +15,9 @@ typedef struct ensemblePuceron
 
 // Fonctions relatives aux pucerons
 
-int mangeTomate(Tomate* tomate);
+void mangeTomate(Tomate *tomate, Puceron *puceron);
 
-void reproductionPuceron(Puceron *puceron, int n, int p, Case potager[n][p], ensemblePuceron *ensPuc);
+void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 void ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc);
 

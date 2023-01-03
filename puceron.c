@@ -1,45 +1,29 @@
 #include "simulation.h"
 
-/*int mangeTomate(Puceron puceron, int n, int p, Case Potager[n][p])
+/*ensemblePuceron creerEnsemblePuceronVide()
 {
-    /* fonction qui remet l'état de croissance d'une tomate "mangeable" a 0, si un
-     puceron se trouve sur la même case 
-    // factoriser si posssible
-    if ((Potager[puceron.coordPuceron.x][puceron.coordPuceron.y]).tomateCase.etatCroissance > 4)
-    {
-        mortTomate((*Potager[puceron.coordPuceron.x][puceron.coordPuceron.y]).tomateCase);
-        return 1; // renvoie 1 comme booléen
-    }
-    else
-    {
-        return 0;
-    }
-}; */ 
+    ensemblePuceron ensPuc;
+    ensPuc.nbPuceron = 0;
+    return ensPuc;
+}
 
-int mangeTomate(Tomate* tomate)
+Puceron* pointeurPuceron(ensemblePuceron *ensPuc, int index)
+{
+    if (index < (*ensPuc).nbPuceron)
+    {
+        return (*ensPuc).tab[index];
+    }
+}
+*/
+
+void mangeTomate(Tomate *tomate, Puceron *puceron)
 {
     /* fonction qui remet l'état de croissance d'une tomate "mangeable" a 0, et ne le modifie pas sinon */
-    // factoriser si posssible
+    // met à jour le compteur de reproduction du puceron en conséquence.
     if ((*tomate).etatCroissance > 4)
     {
+        (*puceron).compteurReproduction++;
         (*tomate).etatCroissance = 0;
-        return 1; // renvoie 1 comme booléen
-    }
-    else
-    {
-        return 0;
-    }
-};
-
-void reproductionPuceron(Puceron *puceron, int n, int p, Case potager[n][p], ensemblePuceron *ensPuc)
-{
-    if (mangeTomate(potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].tomateCase) == 1)
-    { // fonction qui renvoie true ou false si une tomate "mangeable" est sur la meme case qu'un puceron
-        (*puceron).compteurReproduction = (*puceron).compteurReproduction + 1;
-        if ((*puceron).compteurReproduction == 5)
-        {
-            ajoutePuceron(*puceron, ensPuc);
-        }
     }
     else
     {
@@ -47,11 +31,62 @@ void reproductionPuceron(Puceron *puceron, int n, int p, Case potager[n][p], ens
     }
 };
 
-void ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc)
+void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
+{
+    if ((*puceron).compteurReproduction == 5)
+    {
+        ajoutePuceron(*puceron, ensPuc, n, p, potager);
+        (*puceron).compteurReproduction = 0;
+    }
+};
+
+void ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
 {
     if ((*ensPuc).nbPuceron < 900)
     {
-        (*ensPuc).tab[(*ensPuc).nbPuceron] = puceron;
+        Puceron nouveauPuceron;
+        int n = puceron.coordPuceron.x;
+        int p = puceron.coordPuceron.y;
+        if ((potager[n - 1][p - 1].puceronCase == NULL) /*&& (potager[n - 1][p - 1].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n - 1, p - 1};
+        }
+        else if ((potager[n - 1][p].puceronCase == NULL) /*&& (potager[n - 1][p].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n - 1, p};
+        }
+        else if ((potager[n - 1][p + 1].puceronCase == NULL) /*&& (potager[n - 1][p + 1].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n - 1, p + 1};
+        }
+        else if ((potager[n][p - 1].puceronCase == NULL) /*&& (potager[n][p - 1].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n, p - 1};
+        }
+        else if ((potager[n][p + 1].puceronCase == NULL) /*&& (potager[n][p + 1].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n, p + 1};
+        }
+        else if ((potager[n + 1][p - 1].puceronCase == NULL) /*&& (potager[n + 1][p - 1].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n + 1, p - 1};
+        }
+        else if ((potager[n + 1][p].puceronCase == NULL) /*&& (potager[n + 1][p].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n + 1, p};
+        }
+        else if ((potager[n + 1][p + 1].puceronCase == NULL) /*&& (potager[n + 1][p + 1].coccinelleCase = NULL)*/)
+        {
+            nouveauPuceron.coordPuceron = (struct Coordonnees){n + 1, p + 1};
+        }
+        int nouvelleDirection = 0;
+        while ((nouvelleDirection == 0) || (nouvelleDirection == 5))
+        {
+            nouvelleDirection = 1 + rand() % 9;
+        }
+        nouveauPuceron = (struct Puceron){nouveauPuceron.coordPuceron, 0, 0, nouvelleDirection, (*ensPuc).nbPuceron};
+        (*ensPuc).tab[(*ensPuc).nbPuceron] = nouveauPuceron;
+        (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1;
     }
 };
 
@@ -70,8 +105,8 @@ void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
 {
     (*ensPuc).tab[puceron.index] = (*ensPuc).tab[(*ensPuc).nbPuceron - 1]; // remplace le puceron en position INDEX par le dernier puceron de l'ensemble Puceron
-    (*ensPuc).tab[puceron.index].index = puceron.index;                      // réattribue le bon index au puceron qui vient detre déplacé
-    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;                           // corrige le nombre de puceron total dans l'ensemble Puceron
+    (*ensPuc).tab[puceron.index].index = puceron.index;                    // réattribue le bon index au puceron qui vient detre déplacé
+    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;                         // corrige le nombre de puceron total dans l'ensemble Puceron
     potager[puceron.coordPuceron.x][puceron.coordPuceron.y].puceronCase = NULL;
 };
 
