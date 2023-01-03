@@ -57,4 +57,8 @@ void vieillissementCoccinelle(Coccinelle* coccinelle);
 void reproductionCoccinelle(Coccinelle* coccinelle);
 void mortCoccinelle(Coccinelle* coccinelle);
 
+//Fonction d'affichage du potager
+void affichageInsecte(int logo);
+void affichagePotager(int n, int p, Case potager[n][p]);
+
 # endif
