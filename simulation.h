@@ -79,12 +79,6 @@ void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int
 
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
-void initialisationPotagerVide(int ligne, int colonne, Case potager[ligne][colonne]);
-
-ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
-
-void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
-
 void traduction_DirectionCoordonnees(int dir, int* n, int* p);
 /**/
 
@@ -108,6 +102,7 @@ void mortCoccinelle(Coccinelle *coccinelle);
 
 // Fonctions relatives à l'initialisation du potager (niveau 1)
 
+void initialisationPotagerVide(int ligne, int colonne, Case potager[ligne][colonne]);
 ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
 void remplissagePotagerTomate(int ligne, int colonne, Case potager[ligne][colonne]);
 void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
