@@ -227,15 +227,11 @@ void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
 }
 
 void deplacementPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
-
-	printf("Ancienne position puceron : (%d,%d)\n",(*puceron).coordPuceron.x,(*puceron).coordPuceron.y);
 	directionPuceron(puceron, i, j, potager);
 	
 	if (presenceInsecteDirection((*puceron),(*puceron).direction,i,j,potager)==0){
-		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = NULL;
+		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = NULL; //enlève le puceron de son ancienne case dans le potager
 		traduction_DirectionCoordonnees((*puceron).direction, &((*puceron).coordPuceron.x), &((*puceron).coordPuceron.y));
-		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = puceron;
+		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = puceron; //ajoute le puceron dans sa nouvelle case dans le potager
 	}
-	
-	printf("Nouvelle position puceron : (%d,%d)\n",(*puceron).coordPuceron.x,(*puceron).coordPuceron.y);
 }

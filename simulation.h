@@ -11,8 +11,6 @@
 #include <time.h>
 
 
-
-
 typedef struct Coordonnees
 {
     int x;
@@ -82,8 +80,6 @@ int testBordure(int i, int j, int n, int p, Case potager[n][p]);
 
 int genereDirection();
 
-
-
 void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 int ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
@@ -95,8 +91,6 @@ void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case 
 ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
 
 void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
-
-
 
 void traduction_DirectionCoordonnees(int dir, int* n, int* p);
 /**/
