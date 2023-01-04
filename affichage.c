@@ -25,9 +25,9 @@ void affichagePotager(int n, int p, Case potager[n][p]){
 		//Affichage de chaque case du potager
 		
 			//Affichage de la tomate en fonction de son état de croissance
-			if ((*potager[i][j].tomateCase).etatCroissance < 5){
+			if ((potager[i][j].tomateCase).etatCroissance < 5){ //modifié *potager en potager
 				printf(".");
-			}else if ((*potager[i][j].tomateCase).etatCroissance < 20){
+			}else if ((potager[i][j].tomateCase).etatCroissance < 20){ //modifié *potager en potager
 				printf("o");
 			}else {
 				printf("O");

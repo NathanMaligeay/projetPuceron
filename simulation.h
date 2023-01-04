@@ -5,16 +5,11 @@
 #define COLONNE 30
 #define NBPUCERON 20
 
-typedef struct Coordonnees {
-    int x;
-    int y;
-} Coordonnees;
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-
+// Définitions des structures:
 typedef struct Coordonnees
 {
     int x;
@@ -66,35 +61,22 @@ void pousseTomate(Tomate *tomate);
 void mortTomate(Tomate *tomate);
 /*Prend en entrée un pointeur sur un objet de type Tomate et met son état de croissance à 0.*/
 
-void remplissagePotagerTomate(int ligne, int colonne, Case potager[ligne][colonne]);
-
-
-// Fonctions relatives aux coccinelles
-void deplacementCoccinelle(Coccinelle *coccinelle);
-void vieillissementCoccinelle(Coccinelle *coccinelle);
-void reproductionCoccinelle(Coccinelle *coccinelle);
-void mortCoccinelle(Coccinelle *coccinelle);
-
-
 // Fonctions relatives aux pucerons
 
 void mangeTomate(Tomate *tomate, Puceron *puceron);
+/*Prend en entrée un pointeur sur un objet de type Tomate et un pointeur sur un objet de type Puceron et met à jour l'état de la tomate et du le compteur de reproduction du Puceron si celui ci mange la tomate.*/
+
+void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 int testBordure(int i, int j, int n, int p, Case potager[n][p]);
 
 int genereDirection();
-
-void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 int ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
-
-ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
-
-void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
 
 void traduction_DirectionCoordonnees(int dir, int* n, int* p);
 /**/
@@ -111,7 +93,20 @@ void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);
 void deplacementPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);
 /*Prend en entrée un pointeur sur un objet de type Puceron, met à jour la direction de celui-ci, puis modifie sa position.*/
 
-//Fonction d'affichage du potager
+// Fonctions relatives aux coccinelles
+void deplacementCoccinelle(Coccinelle *coccinelle);
+void vieillissementCoccinelle(Coccinelle *coccinelle);
+void reproductionCoccinelle(Coccinelle *coccinelle);
+void mortCoccinelle(Coccinelle *coccinelle);
+
+// Fonctions relatives à l'initialisation du potager (niveau 1)
+
+ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
+void remplissagePotagerTomate(int ligne, int colonne, Case potager[ligne][colonne]);
+void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
+
+//Fonctions relatives à l'affichage du potager
+
 void affichageInsecte(int logo);
 void affichagePotager(int n, int p, Case potager[n][p]);
 

@@ -1,7 +1,5 @@
 #include "simulation.h"
 
-
-
 int main() {
 	Tomate t0 = {{0,0},20};
 	Tomate t1 = {{0,0},0};
@@ -36,7 +34,7 @@ int main() {
 		for(int j=0; j<30; j++){
 			t.coordTomates.x = i;
 			t.coordTomates.y = j;
-			caseP.tomateCase = &t;
+			caseP.tomateCase = t; //modifié &t en t
 			caseP.coccinelleCase = &c0;
 			potager[i][j] = caseP;
 			//printf("i=%d , j=%d , coordTomate.x=%d , coordTomate.y=%d\n",i,j,(*potager[i][j].tomateCase).coordTomates.x,(*potager[i][j].tomateCase).coordTomates.y);
