@@ -5,6 +5,7 @@
 #define COLONNE 30
 #define NBPUCERON 20
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -78,6 +79,12 @@ void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int
 
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
+void initialisationPotagerVide(int ligne, int colonne, Case potager[ligne][colonne]);
+
+ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
+
+void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
+
 void traduction_DirectionCoordonnees(int dir, int* n, int* p);
 /**/
 
@@ -109,5 +116,8 @@ void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, C
 
 void affichageInsecte(int logo);
 void affichagePotager(int n, int p, Case potager[n][p]);
+
+//Fonctions pour récupérer infos sur nos objets
+int nbPucerons_Potager(int ligne, int colonne, Case potager[ligne][colonne]);
 
 #endif

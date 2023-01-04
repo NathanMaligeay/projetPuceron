@@ -9,6 +9,15 @@ ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager
     return ensPuc;
 }
 
+void initialisationPotagerVide(int ligne, int colonne, Case potager[ligne][colonne]){
+	for(int i=0; i<ligne; i++){
+		for(int j=0; j<colonne; j++){
+			potager[i][j].puceronCase = NULL;
+			potager[i][j].coccinelleCase = NULL;
+		}
+	}
+}
+
 void remplissagePotagerTomate(int ligne, int colonne, Case potager[ligne][colonne])
 {
     for (int i = 0; i < ligne; i++)
@@ -35,13 +44,10 @@ void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, C
             coordY = rand() % colonne;
 
         }
-        puceron = (struct Puceron){
-            {coordX, coordY},
-            0,
-            0,
-            genereDirection(),
-            i};
+        puceron = (struct Puceron){{coordX, coordY},0,0,genereDirection(),i};
+        
         (*ensPuc).tab[i] = puceron;
         potager[coordX][coordY].puceronCase = &(*ensPuc).tab[i];
+        //printf("Puceron (%d,%d) : {(%d,%d),%d,%d,%d,%d} i=%d\n",coordX,coordY,potager[coordX][coordY].puceronCase->coordPuceron.x,potager[coordX][coordY].puceronCase->coordPuceron.y,potager[coordX][coordY].puceronCase->compteurReproduction,potager[coordX][coordY].puceronCase->compteurVie,potager[coordX][coordY].puceronCase->direction,potager[coordX][coordY].puceronCase->index,i);
     }
 }
