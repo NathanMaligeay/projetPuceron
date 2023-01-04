@@ -1,9 +1,15 @@
 #ifndef simulation
 #define simulation
 
+#define LIGNE 30
+#define COLONNE 30
+#define NBPUCERON 20
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 
 
 
@@ -39,14 +45,14 @@ typedef struct Puceron
 
 typedef struct ensemblePuceron
 {
-    Puceron tab[900];
+    Puceron tab[LIGNE*COLONNE];
     int nbPuceron;
 } ensemblePuceron;
 
 
 typedef struct Case
 {
-    Tomate *tomateCase;
+    Tomate tomateCase;
     Puceron *puceronCase;
     Coccinelle *coccinelleCase;
 } Case;
@@ -57,6 +63,9 @@ void pousseTomate(Tomate *tomate);
 
 void mortTomate(Tomate *tomate);
 /*Prend en entrée un pointeur sur un objet de type Tomate et met son état de croissance à 0.*/
+
+void remplissagePotagerTomate(int ligne, int colonne, Case potager[ligne][colonne]);
+
 
 // Fonctions relatives aux coccinelles
 void deplacementCoccinelle(Coccinelle *coccinelle);
@@ -69,7 +78,10 @@ void mortCoccinelle(Coccinelle *coccinelle);
 
 void mangeTomate(Tomate *tomate, Puceron *puceron);
 
-int testBordure(int n, int p, int i, int j, Case potager[i][j]);
+int testBordure(int i, int j, int n, int p, Case potager[n][p]);
+
+int genereDirection();
+
 
 
 void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
@@ -79,6 +91,12 @@ int ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case p
 void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
 
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p]);
+
+ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne]);
+
+void apparitionPuceron(int n, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne], Puceron tab[ligne * colonne]);
+
+
 
 void traduction_DirectionCoordonnees(int dir, int* n, int* p);
 /**/
