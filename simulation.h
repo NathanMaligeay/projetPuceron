@@ -1,9 +1,9 @@
 #ifndef simulation
 #define simulation
 
-#define LIGNE 30
-#define COLONNE 30
-#define NBPUCERON 20
+#define LIGNE 5
+#define COLONNE 5
+#define NBPUCERON 1
 
 
 #include <stdio.h>
@@ -59,6 +59,9 @@ typedef struct Case
 void pousseTomate(Tomate *tomate);
 /*Prend en entrée un pointeur sur un objet de type Tomate et met à jour l'état de croissance de cette tomate. Si l'état est compris entre 0 et 4, alors ajoute +1 à celui-ci. Sinon ne fait rien.*/
 
+void pousseTomatesPotager(int ligne, int colonne, Case potager[ligne][colonne]);
+/*Fais pousser toutes les tomates du potager.*/
+
 void mortTomate(Tomate *tomate);
 /*Prend en entrée un pointeur sur un objet de type Tomate et met son état de croissance à 0.*/
 
@@ -88,7 +91,7 @@ int presenceTomateMangeableDirection(Puceron puceron, int dir, int i, int j, Cas
 int presenceInsecteDirection(Puceron puceron, int dir, int i, int j, Case potager[i][j]);
 /*Teste la présence d'un insecte dans une direction donnée, en prenant comme point d'origine un puceron. Si un insecte est présent sur cette case, ou que la direction indiquée est en-dehors du potager, retourne 0, sinon retourne 1.*/
 
-void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);
+void reorientationPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);
 /*Prend en entrée un pointeur sur un objet de type Puceron et adapte la direction de celui-ci en fonction des tomates présentes dans l'environnement direct de celui-ci (=les cases attenantes à la case dans laquelle se trouve le puceron). La direction reste inchangée si une tomate "mangeable" se trouve dans la case attenante indiquée par cette direction et qu'il n'y a pas d'insecte sur cette case, ou bien si le puceron ne peut se déplacer sur aucune des cases qui l'entourent. Si il n'y a pas de tomate mangeable dans cette direction (ou qu'il y a un insecte sur cette case) alors cette fonction donne la direction indiquant la prochaine case attenante avec tomate mangeable et absence d'insecte. Si il n'y en a pas, la fonction donne la direction indiquant la prochaine case attenante avec absence d'insecte. */
 
 void deplacementPuceron(Puceron *puceron, int i, int j, Case potager[i][j]);

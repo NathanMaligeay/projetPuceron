@@ -13,6 +13,7 @@ void mangeTomate(Tomate *tomate, Puceron *puceron)
     {
         (*puceron).compteurReproduction = 0;
     }
+    printf("Execution : mangeTomate\n");
 }
 
 void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
@@ -26,6 +27,7 @@ void reproductionPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int p
             (*puceron).compteurReproduction = 0; // ajouter condition si reproduction fonctionnelle
         }
     }
+    printf("Execution : reproductionPuceron\n");
 }
 
 int testBordure(int i, int j, int n, int p, Case potager[n][p])
@@ -124,6 +126,8 @@ int ajoutePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case p
             nouveauPuceron = (struct Puceron){nouveauPuceron.coordPuceron, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
             (*ensPuc).tab[(*ensPuc).nbPuceron] = nouveauPuceron;
             (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1;
+            //Ajout de Mimi à tester :
+            potager[nouveauPuceron.coordPuceron.x][nouveauPuceron.coordPuceron.y].puceronCase=&(*ensPuc).tab[(*ensPuc).nbPuceron];
         }
     }
     return flag;
@@ -139,6 +143,7 @@ void vieillissementPuceron(Puceron *puceron, ensemblePuceron *ensPuc, int n, int
     {
         (*puceron).compteurVie++;
     }
+    printf("Execution : vieillissementPuceron\n");
 }
 
 void enlevePuceron(Puceron puceron, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
@@ -191,7 +196,7 @@ int presenceInsecteDirection(Puceron puceron, int dir, int i, int j, Case potage
 }
 
 
-void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
+void reorientationPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
 	int dir = (*puceron).direction;
 	
 	if ((presenceTomateMangeableDirection((*puceron),dir,i,j,potager) == 0)||(presenceInsecteDirection((*puceron),dir,i,j,potager)==1)){
@@ -224,10 +229,11 @@ void directionPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
 			}
 		}
 	}
+    printf("Execution : reorientationPuceron\n");
 }
 
 void deplacementPuceron(Puceron *puceron, int i, int j, Case potager[i][j]){
-	directionPuceron(puceron, i, j, potager);
+	//reorientationPuceron(puceron, i, j, potager); //chaque puceron scanne son environnement
 	
 	if (presenceInsecteDirection((*puceron),(*puceron).direction,i,j,potager)==0){
 		potager[(*puceron).coordPuceron.x][(*puceron).coordPuceron.y].puceronCase = NULL; //enlève le puceron de son ancienne case dans le potager
