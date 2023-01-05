@@ -35,14 +35,14 @@ void affichagePotager(int n, int p, Case potager[n][p]){
 			
 			//Affichage de l'éventuel puceron/coccinelle en fonction de sa direction
 			if (potager[i][j].puceronCase != NULL){
-				printf("\033[%sm","32"); //met la couleur du texte en vert dans une console linux
+				printf("\033[1;32m"); //met la couleur du texte en vert dans une console linux
 				affichageInsecte((*potager[i][j].puceronCase).direction);
-				printf("\033[%sm","0"); //réinitialise le système de couleur de la console linux
+				printf("\033[0m"); //réinitialise le système de couleur de la console linux
 				
 			}else if (potager[i][j].coccinelleCase != NULL){
-				printf("\033[%sm","31"); //met la couleur du texte en rouge
+				printf("\033[1;31m"); //met la couleur du texte en rouge
 				affichageInsecte((*potager[i][j].coccinelleCase).direction);
-				printf("\033[%sm","0"); //réinitialise le système de couleur
+				printf("\033[0m"); //réinitialise le système de couleur
 				
 			}else{
 				printf("  ");

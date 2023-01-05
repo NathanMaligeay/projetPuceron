@@ -16,6 +16,5 @@ void pousseTomatesPotager(int ligne, int colonne, Case potager[ligne][colonne]){
 			pousseTomate(&(potager[i][j].tomateCase));
 		}
 	}
-	printf("Execution : pousseTomatesPotager\n");
 }
 
