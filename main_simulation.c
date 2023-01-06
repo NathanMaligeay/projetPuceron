@@ -2,43 +2,46 @@
 
 int main()
 {
+	//Initialisation du temps pour la fonction random
 	srand(time(NULL));
-	// printf("initialise rand\n");
 
+	//Création du potager
 	Case potager[LIGNE][COLONNE];
-	// printf("crée le potager\n");
 
+	//Initialisation de tous les pointeurs du potager sur NULL
 	initialisationPotagerVide(LIGNE, COLONNE, potager);
-	// Initialise tous les pointeurs du potager sur NULL
 
+	//Création de l'ensemble de pucerons (et ajout dans le potager)
 	ensemblePuceron ensPuc = creerEnsemblePuceron(NBPUCERON, LIGNE, COLONNE, potager);
-	// printf("crée l'ensemble de puceron et les ajoutes dans le potager\n");
 
+	//Remplissage du potager de tomates
 	remplissagePotagerTomate(LIGNE, COLONNE, potager);
-	// printf("remplis le potager de tomate\n");
 
-	// lie le potager avec l'ensemble des pucerons
+	//Liaison du potager avec l'ensemble des pucerons
 	for (int i = 0; i < ensPuc.nbPuceron; i++)
 	{
 		potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]);
 	}
 
-	printf("Initialisation :\n");
+	//Affichage du potager initialisé
+	printf("\033[1mInitialisation :\033[0m\n");
 	affichagePotager(LIGNE, COLONNE, potager);
-	printf("Direction de p0 :");
-	affichageInsecte(ensPuc.tab[0].direction);
-	// printf("\nDirection de p1 :");
-	// affichageInsecte(ensPuc.tab[1].direction);
-	printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
+	
+	//Affichage du nb de puceron dans le potager
+	//printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
 	nbPucerons_Potager(LIGNE, COLONNE, potager);
-	printf("\n");
 
-	// On fait 20 tours :
+	//Choix du nb de tours de la simulation :
+	int nbTours = 0;
+	printf("Saisir nombre de tours : ");
+	scanf("%d",&nbTours);
+
+	//Exécution des tours de la simulation
 	int mortPuceron = 0;
 
-	for (int i = 1; i < 20; i++)
+	for (int i = 1; i < nbTours+1; i++)
 	{
-		printf("Tour %d :\n", i);
+		printf("\033[1;34mTour %d :\033[0m\n", i);
 		pousseTomatesPotager(LIGNE, COLONNE, potager);
 		for (int j = 0; j < ensPuc.nbPuceron; j++)
 		{
@@ -68,9 +71,8 @@ int main()
 			potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]); //voir si elle est nécessaire ?
 		}
 		affichagePotager(LIGNE, COLONNE, potager);
-		printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
+		//printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
 		nbPucerons_Potager(LIGNE, COLONNE, potager);
-		printf("\n");
 	}
 
 	return 0;

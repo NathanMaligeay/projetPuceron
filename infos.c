@@ -9,6 +9,6 @@ int nbPucerons_Potager(int ligne, int colonne, Case potager[ligne][colonne]){
 			}
 		}
 	}
-	printf("Nb puceron potager : %d\n", nbP);
+	printf("Nb pucerons dans le potager : %d\n\n", nbP);
 	return nbP;
 }
