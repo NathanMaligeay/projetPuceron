@@ -10,7 +10,7 @@ int nbPucerons_Potager(int ligne, int colonne, Case potager[ligne][colonne]){
 				printf("Puceron {{%d,%d},%d,%d,%d,%d}\n\n",potager[i][j].puceronCase->coordPuceron.x,potager[i][j].puceronCase->coordPuceron.y,potager[i][j].puceronCase->compteurReproduction,potager[i][j].puceronCase->compteurVie,potager[i][j].puceronCase->direction,potager[i][j].puceronCase->index);*/			}
 		}
 	}
-	printf("\033[1;31mNb pucerons potager : %d\033[0m\n\n", nbP);
+	//printf("\033[1;31mNb pucerons potager : %d\033[0m\n\n", nbP);
 	return nbP;
 }
 
