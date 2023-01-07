@@ -1,9 +1,9 @@
 #ifndef simulation
 #define simulation
 
-#define LIGNE 10
-#define COLONNE 10
-#define NBPUCERON 5
+#define LIGNE 30
+#define COLONNE 30
+#define NBPUCERON 20
 
 
 #include <stdio.h>

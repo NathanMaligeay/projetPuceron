@@ -111,7 +111,8 @@ int main()
 			}
 			else
 			{
-				potager[x][y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort reverifier pq  ça ne fonctionne pas dans la fonction enlevePuceron
+				printf("Le puceron %d est mort.\n",j);
+				//potager[x][y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort reverifier pq  ça ne fonctionne pas dans la fonction enlevePuceron
 				j = j - 1;
 			}
 		}
@@ -120,10 +121,10 @@ int main()
 			potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]); //voir si elle est nécessaire ?
 		} */
 		affichagePotager(LIGNE, COLONNE, potager);
-		for(int i=0; i<ensPuc.nbPuceron; i++){
+		/* for(int i=0; i<ensPuc.nbPuceron; i++){
 			printf("Adresse : %p\n",&(ensPuc.tab[i]));
 			printf("Puceron {{%d,%d},%d,%d,%d,%d}\n\n",ensPuc.tab[i].coordPuceron.x,ensPuc.tab[i].coordPuceron.y,ensPuc.tab[i].compteurReproduction,ensPuc.tab[i].compteurVie,ensPuc.tab[i].direction,ensPuc.tab[i].index);
-		}
+		} */
 		printf("\n\033[1;31mNb puceron ensPuc  : %d\033[0m\n", ensPuc.nbPuceron);
 		nbPucerons_Potager(LIGNE, COLONNE, potager);
 	}
