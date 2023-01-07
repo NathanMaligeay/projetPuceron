@@ -1,4 +1,4 @@
-#include "simulation.h"
+#include "affichage.h"
 
 void affichageInsecte(int logo){
 	if ((logo == 1)||(logo == 9)){

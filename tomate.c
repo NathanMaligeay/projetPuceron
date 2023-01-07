@@ -1,13 +1,13 @@
-#include "simulation.h"
+#include "tomate.h"
 
-void pousseTomate(Tomate* tomate){
-	if ((*tomate).etatCroissance < 20) {
-		(*tomate).etatCroissance ++ ;
+void pousseTomate(Tomate* tomateCible){
+	if ((*tomateCible).etatCroissance < 20) {
+		(*tomateCible).etatCroissance ++ ;
 	}
 }
 
-void mortTomate(Tomate* tomate){
-	(*tomate).etatCroissance = 0;
+void mortTomate(Tomate* tomateCible){
+	(*tomateCible).etatCroissance = 0;
 }
 
 void pousseTomatesPotager(int ligne, int colonne, Case potager[ligne][colonne]){
