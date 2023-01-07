@@ -12,5 +12,4 @@ void enleveCoccinelle(int coccinelleIndex, ensembleCoccinelle *ensCoc, int n, in
 int vieillissementCoccinelle(int coccinelleIndex, ensembleCoccinelle *ensCoc, int n, int p, Case potager[n][p]);
 void presencePuceronRayon(int coccinelleIndex, ensembleCoccinelle ensCoc, int n, int p, Case potager[n][p]);
 
-
 #endif

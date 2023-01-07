@@ -13,7 +13,4 @@ void pousseTomatesPotager(int ligne, int colonne, Case potager[ligne][colonne]);
 void mortTomate(Tomate *tomate);
 /*Prend en entrée un pointeur sur un objet de type Tomate et met son état de croissance à 0.*/
 
-
-
-
 #endif

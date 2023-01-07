@@ -30,7 +30,6 @@ typedef struct Coccinelle
     int direction;
 } Coccinelle;
 
-
 typedef struct Puceron
 {
     Coordonnees coordPuceron;
@@ -42,10 +41,9 @@ typedef struct Puceron
 
 typedef struct ensemblePuceron
 {
-    Puceron tab[LIGNE*COLONNE];
+    Puceron tab[LIGNE * COLONNE];
     int nbPuceron;
 } ensemblePuceron;
-
 
 typedef struct Case
 {

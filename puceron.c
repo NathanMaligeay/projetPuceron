@@ -13,7 +13,7 @@ void mangeTomate(Tomate *tomate, int puceronIndex, ensemblePuceron *ensPuc)
     }
 }
 
-void reproductionPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
+void reproductionPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case *pointeurPotager[n][p])
 {
     if ((*ensPuc).tab[puceronIndex].compteurReproduction == 5)
     {
@@ -26,7 +26,7 @@ void reproductionPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p
     }
 }
 
-void testBordure(int i, int j, int n, int p, Case* pointeurPotager[n][p], Coordonnees *coord, int *flag)
+void testBordure(int i, int j, int n, int p, Case *pointeurPotager[n][p], Coordonnees *coord, int *flag)
 {
     Coordonnees tab[8];
     int longueurtab = 0;
@@ -62,7 +62,7 @@ int genereDirection()
     return direction;
 }
 
-int ajoutePuceron(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int colonne, Case* pointeurPotager[ligne][colonne])
+int ajoutePuceron(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int colonne, Case *pointeurPotager[ligne][colonne])
 {
     Coordonnees nouvelleCoord;
     int flag = 0;
@@ -76,14 +76,14 @@ int ajoutePuceron(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int colo
         {
             nouveauPuceron = (struct Puceron){nouvelleCoord, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
             (*ensPuc).tab[(*ensPuc).nbPuceron] = nouveauPuceron; // insère le nouveau puceron dans l'ensemble
-            (*pointeurPotager[nouveauPuceron.coordPuceron.x][nouveauPuceron.coordPuceron.y]).puceronCase= &(*ensPuc).tab[(*ensPuc).nbPuceron];
-            (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1;       // incrémente de 1 le compteur de puceron de l'ensemble
+            (*pointeurPotager[nouveauPuceron.coordPuceron.x][nouveauPuceron.coordPuceron.y]).puceronCase = &(*ensPuc).tab[(*ensPuc).nbPuceron];
+            (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1; // incrémente de 1 le compteur de puceron de l'ensemble
         }
     }
     return flag;
 }
 
-int vieillissementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
+int vieillissementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case *pointeurPotager[n][p])
 {
     if ((*ensPuc).tab[puceronIndex].compteurVie == 10)
     {
@@ -97,15 +97,16 @@ int vieillissementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int 
     }
 }
 
-void enlevePuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
-{  
+void enlevePuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case *pointeurPotager[n][p])
+{
     (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort
-    if(puceronIndex != (*ensPuc).nbPuceron-1){
-        (*ensPuc).tab[puceronIndex] = (*ensPuc).tab[(*ensPuc).nbPuceron - 1];                                               // remplace le puceron en position INDEX par le dernier puceron de l'ensemble Puceron
-        (*ensPuc).tab[puceronIndex].index = puceronIndex;                                                                   // réattribue le bon index au puceron qui vient detre déplacé                                                                      // corrige le nombre de puceron total dans l'ensemble Puceron
+    if (puceronIndex != (*ensPuc).nbPuceron - 1)
+    {
+        (*ensPuc).tab[puceronIndex] = (*ensPuc).tab[(*ensPuc).nbPuceron - 1]; // remplace le puceron en position INDEX par le dernier puceron de l'ensemble Puceron
+        (*ensPuc).tab[puceronIndex].index = puceronIndex;                     // réattribue le bon index au puceron qui vient detre déplacé                                                                      // corrige le nombre de puceron total dans l'ensemble Puceron
         (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = &((*ensPuc).tab[puceronIndex]);
     }
-    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;                                                                           // corrige le nombre de puceron total dans l'ensemble Puceron
+    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1; // corrige le nombre de puceron total dans l'ensemble Puceron
 }
 
 void traduction_DirectionCoordonnees(int dir, int *n, int *p)
@@ -128,7 +129,7 @@ void traduction_DirectionCoordonnees(int dir, int *n, int *p)
     }
 }
 
-int presenceTomateMangeableDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int n, int p, Case* pointeurPotager[n][p])
+int presenceTomateMangeableDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int n, int p, Case *pointeurPotager[n][p])
 {
     int x = ensPuc.tab[puceronIndex].coordPuceron.x;
     int y = ensPuc.tab[puceronIndex].coordPuceron.y;
@@ -146,7 +147,7 @@ int presenceTomateMangeableDirection(int puceronIndex, ensemblePuceron ensPuc, i
     }
 }
 
-int presenceInsecteDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int n, int p, Case* pointeurPotager[n][p])
+int presenceInsecteDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int n, int p, Case *pointeurPotager[n][p])
 {
     int x = ensPuc.tab[puceronIndex].coordPuceron.x;
     int y = ensPuc.tab[puceronIndex].coordPuceron.y;
@@ -163,7 +164,7 @@ int presenceInsecteDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, 
     }
 }
 
-void reorientationPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
+void reorientationPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case *pointeurPotager[n][p])
 {
     int dir = (*ensPuc).tab[puceronIndex].direction;
     int nouvelleDir;
@@ -206,12 +207,12 @@ void reorientationPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int 
     }
 }
 
-void deplacementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
+void deplacementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case *pointeurPotager[n][p])
 {
     if (presenceInsecteDirection(puceronIndex, *ensPuc, (*ensPuc).tab[puceronIndex].direction, n, p, pointeurPotager) == 0)
     {
-        (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = NULL; // enlève le puceron de son ancienne case dans le potager
-        traduction_DirectionCoordonnees((*ensPuc).tab[puceronIndex].direction, &((*ensPuc).tab[puceronIndex].coordPuceron.x), &((*ensPuc).tab[puceronIndex].coordPuceron.y)); //met à jour les coordonnées du puceron dans l'ensemble des pucerons
-        (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = &((*ensPuc).tab[puceronIndex]); // ajoute le puceron dans sa nouvelle case dans le potager
+        (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = NULL;                                        // enlève le puceron de son ancienne case dans le potager
+        traduction_DirectionCoordonnees((*ensPuc).tab[puceronIndex].direction, &((*ensPuc).tab[puceronIndex].coordPuceron.x), &((*ensPuc).tab[puceronIndex].coordPuceron.y)); // met à jour les coordonnées du puceron dans l'ensemble des pucerons
+        (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = &((*ensPuc).tab[puceronIndex]);              // ajoute le puceron dans sa nouvelle case dans le potager
     }
 }
