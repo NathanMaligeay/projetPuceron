@@ -22,11 +22,12 @@ void reproductionPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p
     if ((*ensPuc).tab[puceronIndex].compteurReproduction == 5) // cibler l'ensemble puceron plutot que la case du potager
     {
         int result;
-        printf("le puceron %d va se reproduire.\n", puceronIndex);
-        result = ajoutePuceron(puceronIndex, ensPuc, n, p, pointeurPotager);
+        //printf("le puceron %d va se reproduire.\n", puceronIndex);
+        //result = ajoutePuceron(puceronIndex, ensPuc, n, p, pointeurPotager);
+        result = ajoutePuceron3(puceronIndex, ensPuc, n, p, pointeurPotager);
         if (result == 1)
         {
-            printf("le puceron %d s'est reproduit !\n", puceronIndex);
+            //printf("le puceron %d s'est reproduit !\n", puceronIndex);
             (*ensPuc).tab[puceronIndex].compteurReproduction = 0;
         }
     }
@@ -39,6 +40,32 @@ int testBordure(int i, int j, int n, int p, Case* pointeurPotager[n][p])
         return 1;
     }
     return 0;
+}
+
+void testBordure3(int i, int j, int n, int p, Case* pointeurPotager[n][p], Coordonnees *coord, int *flag)
+{
+    Coordonnees tab[8];
+    int longueurtab = 0;
+    for (int k = -1; k < 2; k++)
+    {
+        for (int l = -1; l < 2; l++)
+        {
+            if (!((k == 0) && (l == 0)))
+            {
+                if (((i + k > -1) && (j + l > -1)) && ((i + k < n) && (j + l < p)) && (((*pointeurPotager[i + k][j + l]).puceronCase == NULL) && ((*pointeurPotager[i + k][j + l]).coccinelleCase == NULL)))
+                {
+                    tab[longueurtab] = (struct Coordonnees){i + k, j + l};
+                    longueurtab++;
+                }
+            }
+        }
+    }
+    if (longueurtab != 0)
+    {
+        *flag = 1;
+        int indexhasard = rand() % longueurtab;
+        *coord = tab[indexhasard];
+    }
 }
 
 int genereDirection()
@@ -134,12 +161,33 @@ int ajoutePuceron(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int colo
     return flag;
 }
 
+int ajoutePuceron3(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int colonne, Case* pointeurPotager[ligne][colonne])
+{
+    Coordonnees nouvelleCoord;
+    int flag = 0;
+    if ((*ensPuc).nbPuceron < LIGNE * COLONNE)
+    {
+        Puceron nouveauPuceron;
+        int n = (*ensPuc).tab[puceronIndex].coordPuceron.x;
+        int p = (*ensPuc).tab[puceronIndex].coordPuceron.y;
+        testBordure3(n, p, ligne, colonne, pointeurPotager, &nouvelleCoord, &flag);
+        if (flag == 1)
+        {
+            nouveauPuceron = (struct Puceron){nouvelleCoord, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
+            (*ensPuc).tab[(*ensPuc).nbPuceron] = nouveauPuceron; // insère le nouveau puceron dans l'ensemble
+            (*pointeurPotager[nouveauPuceron.coordPuceron.x][nouveauPuceron.coordPuceron.y]).puceronCase= &(*ensPuc).tab[(*ensPuc).nbPuceron];
+            (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1;       // incrémente de 1 le compteur de puceron de l'ensemble
+        }
+    }
+    return flag;
+}
+
 int vieillissementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
 {
     if ((*ensPuc).tab[puceronIndex].compteurVie == 10)
     {
         enlevePuceron(puceronIndex, ensPuc, n, p, pointeurPotager);
-        printf("le puceron %d est mort\n", puceronIndex);
+        //printf("le puceron %d est mort\n", puceronIndex);
         return 1;
     }
     else
@@ -157,7 +205,7 @@ void enlevePuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case
         (*ensPuc).tab[puceronIndex].index = puceronIndex;                                                                   // réattribue le bon index au puceron qui vient detre déplacé                                                                      // corrige le nombre de puceron total dans l'ensemble Puceron
         (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = &((*ensPuc).tab[puceronIndex]);
     }
-    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;
+    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;                                                                           // corrige le nombre de puceron total dans l'ensemble Puceron
 }
 
 void traduction_DirectionCoordonnees(int dir, int *n, int *p)
@@ -180,15 +228,15 @@ void traduction_DirectionCoordonnees(int dir, int *n, int *p)
     }
 }
 
-int presenceTomateMangeableDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int i, int j, Case* pointeurPotager[i][j])
+int presenceTomateMangeableDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int n, int p, Case* pointeurPotager[n][p])
 {
-    int n = ensPuc.tab[puceronIndex].coordPuceron.x; // mettre *n à la place de n ? pas sur mais je crois pas
-    int p = ensPuc.tab[puceronIndex].coordPuceron.y; // not certain
+    int x = ensPuc.tab[puceronIndex].coordPuceron.x; // mettre *n à la place de n ? pas sur mais je crois pas
+    int y = ensPuc.tab[puceronIndex].coordPuceron.y; // not certain
 
-    traduction_DirectionCoordonnees(dir, &n, &p); // modifie les valeurs de n et p dans la fonction presenceTomateMangeableDirection selon des conditions
+    traduction_DirectionCoordonnees(dir, &x, &y); // modifie les valeurs de n et p dans la fonction presenceTomateMangeableDirection selon des conditions
     // valeurs de n et p modifiées normalement
 
-    if ((n >= 0) && (n < i) && (p >= 0) && (p < j) && ((*pointeurPotager[n][p]).tomateCase.etatCroissance > 4))
+    if ((x >= 0) && (x < n) && (y >= 0) && (y < p) && ((*pointeurPotager[x][y]).tomateCase.etatCroissance > 4))
     {
         return 1;
     }
@@ -198,14 +246,14 @@ int presenceTomateMangeableDirection(int puceronIndex, ensemblePuceron ensPuc, i
     }
 }
 
-int presenceInsecteDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int i, int j, Case* pointeurPotager[i][j])
+int presenceInsecteDirection(int puceronIndex, ensemblePuceron ensPuc, int dir, int n, int p, Case* pointeurPotager[n][p])
 {
-    int n = ensPuc.tab[puceronIndex].coordPuceron.x;
-    int p = ensPuc.tab[puceronIndex].coordPuceron.y;
+    int x = ensPuc.tab[puceronIndex].coordPuceron.x;
+    int y = ensPuc.tab[puceronIndex].coordPuceron.y;
 
-    traduction_DirectionCoordonnees(dir, &n, &p);
+    traduction_DirectionCoordonnees(dir, &x, &y);
 
-    if ((n >= 0) && (n < i) && (p >= 0) && (p < j) && ((*pointeurPotager[n][p]).puceronCase == NULL) && ((*pointeurPotager[n][p]).coccinelleCase == NULL))
+    if ((x >= 0) && (x < n) && (y >= 0) && (y < p) && ((*pointeurPotager[x][y]).puceronCase == NULL) && ((*pointeurPotager[x][y]).coccinelleCase == NULL))
     {
         return 0;
     }
@@ -261,11 +309,52 @@ void reorientationPuceron(int puceronIndex, ensemblePuceron *ensPuc, int i, int 
     }
 }
 
-void deplacementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int i, int j, Case* pointeurPotager[i][j]) // pas fini de modifier cette fonction
+void reorientationPuceron3(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
 {
-    // reorientationPuceron(puceron, i, j, potager); //chaque puceron scanne son environnement PQ EN COMMENTAIRE ICI ?
+    int dir = (*ensPuc).tab[puceronIndex].direction;
+    int nouvelleDir;
+    int tab[8];
+    int longueurtab = 0;
 
-    if (presenceInsecteDirection(puceronIndex, *ensPuc, (*ensPuc).tab[puceronIndex].direction, i, j, pointeurPotager) == 0)
+    if ((presenceTomateMangeableDirection(puceronIndex, *ensPuc, dir, n, p, pointeurPotager) == 0) || (presenceInsecteDirection(puceronIndex, *ensPuc, dir, n, p, pointeurPotager) == 1))
+    {
+        for (int k = 1; k < 10; k++) // cas ou il y a des tomates ET pas d'insectes
+        {
+            if (((k != dir) || (k == 5)) && ((presenceTomateMangeableDirection(puceronIndex, *ensPuc, k, n, p, pointeurPotager) == 1) && (presenceInsecteDirection(puceronIndex, *ensPuc, k, n, p, pointeurPotager) == 0)))
+            {
+                tab[longueurtab] = k;
+                longueurtab++;
+            }
+        }
+        if (longueurtab != 0) // puceron a trouvé au moins une case optimale càd avec une tomate et sans autre insecte
+        {
+            int indexhasard = rand() % longueurtab;
+            nouvelleDir = tab[indexhasard];
+            (*ensPuc).tab[puceronIndex].direction = nouvelleDir;
+        }
+        else
+        {
+            for (int k = 1; k < 10; k++) // cas ou il n'y a pas de tomate ET pas d'insectes
+            {
+                if (((k != dir) || (k == 5)) && ((presenceInsecteDirection(puceronIndex, *ensPuc, k, n, p, pointeurPotager) == 0)))
+                {
+                    tab[longueurtab] = k;
+                    longueurtab++;
+                }
+            }
+            if (longueurtab != 0) // puceron a trouvé une case sans insecte
+            {
+                int indexhasard = rand() % longueurtab;
+                nouvelleDir = tab[indexhasard];
+                (*ensPuc).tab[puceronIndex].direction = nouvelleDir;
+            }
+        }
+    }
+}
+
+void deplacementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case* pointeurPotager[n][p])
+{
+    if (presenceInsecteDirection(puceronIndex, *ensPuc, (*ensPuc).tab[puceronIndex].direction, n, p, pointeurPotager) == 0)
     {
         (*pointeurPotager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y]).puceronCase = NULL; // enlève le puceron de son ancienne case dans le potager
         traduction_DirectionCoordonnees((*ensPuc).tab[puceronIndex].direction, &((*ensPuc).tab[puceronIndex].coordPuceron.x), &((*ensPuc).tab[puceronIndex].coordPuceron.y)); //met à jour les coordonnées du puceron dans l'ensemble des pucerons

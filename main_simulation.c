@@ -5,8 +5,9 @@ int main()
 	//Initialisation du temps pour la fonction random
 	srand(time(NULL));
 
-	//Création du potager
+	//Déclaration du potager et de l'ensemble des pucerons
 	Case potager[LIGNE][COLONNE];
+	ensemblePuceron ensPuc;
 
 	//Création d'un tableau de pointeurs vers les cases du tableau potager
 	Case* pointeurPotager[LIGNE][COLONNE];
@@ -20,8 +21,7 @@ int main()
 	//Initialisation de tous les pointeurs du potager sur NULL
 	initialisationPotagerVide(LIGNE, COLONNE, pointeurPotager);
 
-	//Création de l'ensemble de pucerons (et ajout dans le potager)
-	ensemblePuceron ensPuc;
+	//Initialisation de l'ensemble de pucerons (et ajout dans le potager)
 	creerEnsemblePuceron(&ensPuc, NBPUCERON, LIGNE, COLONNE, pointeurPotager);
 
 	//Remplissage du potager de tomates
@@ -34,18 +34,12 @@ int main()
 	}
 	printf("\n"); */
 
-	/* //Liaison du potager avec l'ensemble des pucerons
-	for (int i = 0; i < ensPuc.nbPuceron; i++)
-	{
-		potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]);
-	} */
-
 	//Affichage du potager initialisé
 	printf("\033[1mInitialisation :\033[0m\n");
 	affichagePotager(LIGNE, COLONNE, potager);
 	
 	//Affichage du nb de puceron dans le potager
-	//printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
+	printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
 	nbPucerons_Potager(LIGNE, COLONNE, potager);
 
 /*
@@ -84,7 +78,7 @@ int main()
 	scanf("%d",&nbTours);
 
 	//Exécution des tours de la simulation
-	int mortPuceron = 0;
+	int mortPuceron ;
 
 	for (int i = 1; i < nbTours+1; i++)
 	{
@@ -103,28 +97,24 @@ int main()
 			int y = ensPuc.tab[j].coordPuceron.y;
 
 			mangeTomate(&(potager[x][y].tomateCase), j, &ensPuc);
-			reproductionPuceron(j, &ensPuc, LIGNE, COLONNE, pointeurPotager);				  // ne plus cibler le potager
-			mortPuceron = vieillissementPuceron(j, &ensPuc, LIGNE, COLONNE, pointeurPotager); // ne plus cibler le potager
+			reproductionPuceron(j, &ensPuc, LIGNE, COLONNE, pointeurPotager);				 
+			mortPuceron = vieillissementPuceron(j, &ensPuc, LIGNE, COLONNE, pointeurPotager);
 			if (mortPuceron == 0)
 			{
-				reorientationPuceron(j, &ensPuc, LIGNE, COLONNE, pointeurPotager); // ne plus cibler le potager
+				reorientationPuceron3(j, &ensPuc, LIGNE, COLONNE, pointeurPotager);
 			}
 			else
 			{
 				printf("Le puceron %d est mort.\n",j);
-				//potager[x][y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort reverifier pq  ça ne fonctionne pas dans la fonction enlevePuceron
 				j = j - 1;
 			}
 		}
-		/* for (int i = 0; i < ensPuc.nbPuceron; i++)
-		{
-			potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]); //voir si elle est nécessaire ?
-		} */
+
 		affichagePotager(LIGNE, COLONNE, potager);
-		/* for(int i=0; i<ensPuc.nbPuceron; i++){
-			printf("Adresse : %p\n",&(ensPuc.tab[i]));
-			printf("Puceron {{%d,%d},%d,%d,%d,%d}\n\n",ensPuc.tab[i].coordPuceron.x,ensPuc.tab[i].coordPuceron.y,ensPuc.tab[i].compteurReproduction,ensPuc.tab[i].compteurVie,ensPuc.tab[i].direction,ensPuc.tab[i].index);
-		} */
+		// for(int i=0; i<ensPuc.nbPuceron; i++){
+		// 	printf("Adresse : %p\n",&(ensPuc.tab[i]));
+		// 	printf("Puceron {{%d,%d},%d,%d,%d,%d}\n\n",ensPuc.tab[i].coordPuceron.x,ensPuc.tab[i].coordPuceron.y,ensPuc.tab[i].compteurReproduction,ensPuc.tab[i].compteurVie,ensPuc.tab[i].direction,ensPuc.tab[i].index);
+		// }
 		printf("\n\033[1;31mNb puceron ensPuc  : %d\033[0m\n", ensPuc.nbPuceron);
 		nbPucerons_Potager(LIGNE, COLONNE, potager);
 	}
