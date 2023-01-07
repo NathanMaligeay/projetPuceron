@@ -10,12 +10,10 @@ int nbPucerons_Potager(int ligne, int colonne, Case potager[ligne][colonne])
 			if (potager[i][j].puceronCase != NULL)
 			{
 				nbP++;
-				printf("Adresse : %p\n", potager[i][j].puceronCase);
-				printf("Puceron {{%d,%d},%d,%d,%d,%d}\n\n", potager[i][j].puceronCase->coordPuceron.x, potager[i][j].puceronCase->coordPuceron.y, potager[i][j].puceronCase->compteurReproduction, potager[i][j].puceronCase->compteurVie, potager[i][j].puceronCase->direction, potager[i][j].puceronCase->index);
 			}
 		}
 	}
-	printf("Nb puceron potager : %d\n", nbP);
+	printf("\033[1;31mNb pucerons potager : %d\033[0m\n\n", nbP);
 	return nbP;
 }
 
@@ -38,4 +36,3 @@ float ratioTomatesMures_Potager(int i, int j, Case potager[i][j]){
 	ratio = ratio/(i*j);
 	return ratio;
 }
-

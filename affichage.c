@@ -14,9 +14,6 @@ void affichageInsecte(int logo){
 	}else if (logo == 8){
 		printf(" V");
 	}
-	else if (logo==0) {
-		printf(" e");
-	}
 }
 
 void affichagePotager(int n, int p, Case potager[n][p]){
