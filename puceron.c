@@ -166,8 +166,8 @@ int ajoutePuceron2(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int col
         {
             Puceron nouveauPuceron = {nouvelleCoord, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
             (*ensPuc).tab[(*ensPuc).nbPuceron] = nouveauPuceron; // insère le nouveau puceron dans l'ensemble
-            (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1;       // incrémente de 1 le compteur de puceron de l'ensemble
             potager[nouveauPuceron.coordPuceron.x][nouveauPuceron.coordPuceron.y].puceronCase = &(*ensPuc).tab[(*ensPuc).nbPuceron];
+            (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1; // incrémente de 1 le compteur de puceron de l'ensemble
         }
     }
     return flag;

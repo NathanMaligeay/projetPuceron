@@ -55,14 +55,14 @@ int main()
 			}
 			else
 			{
-				potager[x][y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort  // reverifier pq  ça ne fonctionne pas dans la fonction enlevePuceron
+				// potager[x][y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort  // reverifier pq  ça ne fonctionne pas dans la fonction enlevePuceron
 				j = j - 1;
 			}
 		}
-		for (int i = 0; i < ensPuc.nbPuceron; i++)
-		{
-			potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]); // voir si elle est nécessaire ?
-		}
+		// for (int i = 0; i < ensPuc.nbPuceron; i++)
+		// {
+		// 	potager[ensPuc.tab[i].coordPuceron.x][ensPuc.tab[i].coordPuceron.y].puceronCase = &(ensPuc.tab[i]); // voir si elle est nécessaire ?
+		// }
 		affichagePotager(LIGNE, COLONNE, potager);
 		for (int i = 0; i < ensPuc.nbPuceron; i++)
 		{

@@ -3,7 +3,7 @@
 
 #define LIGNE 10
 #define COLONNE 10
-#define NBPUCERON 5
+#define NBPUCERON 20
 #define NBCOCCINELLE 5
 
 #include <stdio.h>
