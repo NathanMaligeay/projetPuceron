@@ -157,15 +157,14 @@ int ajoutePuceron2(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int col
 {
     Coordonnees nouvelleCoord;
     int flag = 0;
-    if ((*ensPuc).nbPuceron < LIGNE * COLONNE)
+    if ((*ensPuc).nbPuceron < ligne * colonne)
     {
-        Puceron nouveauPuceron;
         int n = (*ensPuc).tab[puceronIndex].coordPuceron.x;
         int p = (*ensPuc).tab[puceronIndex].coordPuceron.y;
         testBordure2(n, p, ligne, colonne, potager, &nouvelleCoord, &flag);
         if (flag == 1)
         {
-            nouveauPuceron = (struct Puceron){nouvelleCoord, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
+            Puceron nouveauPuceron = {nouvelleCoord, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
             (*ensPuc).tab[(*ensPuc).nbPuceron] = nouveauPuceron; // insère le nouveau puceron dans l'ensemble
             (*ensPuc).nbPuceron = (*ensPuc).nbPuceron + 1;       // incrémente de 1 le compteur de puceron de l'ensemble
             potager[nouveauPuceron.coordPuceron.x][nouveauPuceron.coordPuceron.y].puceronCase = &(*ensPuc).tab[(*ensPuc).nbPuceron];
@@ -191,10 +190,13 @@ int vieillissementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int 
 void enlevePuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
 {
     potager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort
-    (*ensPuc).tab[puceronIndex] = (*ensPuc).tab[(*ensPuc).nbPuceron - 1];                                               // remplace le puceron en position INDEX par le dernier puceron de l'ensemble Puceron
-    (*ensPuc).tab[puceronIndex].index = puceronIndex;                                                                   // réattribue le bon index au puceron qui vient detre déplacé
-    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;                                                                      // corrige le nombre de puceron total dans l'ensemble Puceron
-    potager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y].puceronCase = &((*ensPuc).tab[puceronIndex]);
+    if (puceronIndex != (*ensPuc).nbPuceron - 1)
+    {
+        (*ensPuc).tab[puceronIndex] = (*ensPuc).tab[(*ensPuc).nbPuceron - 1]; // remplace le puceron en position INDEX par le dernier puceron de l'ensemble Puceron
+        (*ensPuc).tab[puceronIndex].index = puceronIndex;                     // réattribue le bon index au puceron qui vient detre déplacé
+        potager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y].puceronCase = &((*ensPuc).tab[puceronIndex]);
+    }
+    (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1; // corrige le nombre de puceron total dans l'ensemble Puceron
 }
 
 void traduction_DirectionCoordonnees(int dir, int *n, int *p)
