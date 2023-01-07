@@ -6,11 +6,11 @@ int main()
 	int mortPuceron ;
 
 	//Choix du nb de simulations :
-	int nbSimul = 1;
+	int nbSimul ;
 	printf("Saisir nombre de simulations : ");
 	scanf("%d",&nbSimul);
 
-	//Choix du nb de tours de la simulation :
+	//Choix du nb de tours de chaque simulation :
 	int nbTours = 0;
 	printf("Saisir nombre de tours : ");
 	scanf("%d",&nbTours);
@@ -46,9 +46,7 @@ int main()
 		//printf("\nNb puceron ensPuc  : %d\n", ensPuc.nbPuceron);
 		//nbPucerons_Potager(LIGNE, COLONNE, potager);
 
-		//Exécution des tours de la simulation
-		mortPuceron = 0;
-	
+		//Exécution des tours de la simulation	
 		for (int i = 1; i < nbTours+1; i++)
 		{
 			//printf("\033[1;34mTour %d :\033[0m\n", i);
@@ -56,7 +54,6 @@ int main()
 			for (int j = 0; j < ensPuc.nbPuceron; j++)
 			{
 				deplacementPuceron(j, &ensPuc, LIGNE, COLONNE, potager);
-				//printf("le puceron %d s'est deplacé !\n", j);
 			}
 			for (int j = 0; j < ensPuc.nbPuceron; j++)
 			{
