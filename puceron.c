@@ -44,9 +44,9 @@ void testBordure2(int i, int j, int n, int p, Case potager[n][p], Coordonnees *c
     {
         for (int l = -1; l < 2; l++)
         {
-            if ((k != 0) || (j != 0))
+            if (!((k == 0) && (l == 0)))
             {
-                if ((((i + k > -1) && (i + k < n)) && ((j + l > -1) && (j + l < p))) && ((potager[i + k][j + l].puceronCase == NULL) && ((potager[i + k][j + l].coccinelleCase == NULL))))
+                if (((i + k > -1) && (j + l > -1)) && ((i + k < n) && (j + l < p)) && ((potager[i + k][j + l].puceronCase == NULL) && ((potager[i + k][j + l].coccinelleCase == NULL))))
                 {
                     tab[longueurtab] = (struct Coordonnees){i + k, j + l};
                     longueurtab++;
@@ -153,7 +153,7 @@ int ajoutePuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case 
     return flag;
 }
 
-int ajoutePuceron2(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
+int ajoutePuceron2(int puceronIndex, ensemblePuceron *ensPuc, int ligne, int colonne, Case potager[ligne][colonne])
 {
     Coordonnees nouvelleCoord;
     int flag = 0;
@@ -162,7 +162,7 @@ int ajoutePuceron2(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case
         Puceron nouveauPuceron;
         int n = (*ensPuc).tab[puceronIndex].coordPuceron.x;
         int p = (*ensPuc).tab[puceronIndex].coordPuceron.y;
-        testBordure2(n, p, 30, 30, potager, &nouvelleCoord, &flag);
+        testBordure2(n, p, ligne, colonne, potager, &nouvelleCoord, &flag);
         if (flag == 1)
         {
             nouveauPuceron = (struct Puceron){nouvelleCoord, 0, 0, genereDirection(), (*ensPuc).nbPuceron};
@@ -190,11 +190,11 @@ int vieillissementPuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int 
 
 void enlevePuceron(int puceronIndex, ensemblePuceron *ensPuc, int n, int p, Case potager[n][p])
 {
-    potager[(*ensPuc).tab[(*ensPuc).nbPuceron - 1].coordPuceron.x][(*ensPuc).tab[(*ensPuc).nbPuceron - 1].coordPuceron.y].puceronCase = &((*ensPuc).tab[puceronIndex]);
+    potager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort
     (*ensPuc).tab[puceronIndex] = (*ensPuc).tab[(*ensPuc).nbPuceron - 1];                                               // remplace le puceron en position INDEX par le dernier puceron de l'ensemble Puceron
     (*ensPuc).tab[puceronIndex].index = puceronIndex;                                                                   // réattribue le bon index au puceron qui vient detre déplacé
     (*ensPuc).nbPuceron = (*ensPuc).nbPuceron - 1;                                                                      // corrige le nombre de puceron total dans l'ensemble Puceron
-    potager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y].puceronCase = NULL; // remet à NULL le pointeur de la case du puceron mort
+    potager[(*ensPuc).tab[puceronIndex].coordPuceron.x][(*ensPuc).tab[puceronIndex].coordPuceron.y].puceronCase = &((*ensPuc).tab[puceronIndex]);
 }
 
 void traduction_DirectionCoordonnees(int dir, int *n, int *p)
@@ -307,7 +307,7 @@ void reorientationPuceron2(int puceronIndex, ensemblePuceron *ensPuc, int n, int
 
     if ((presenceTomateMangeableDirection(puceronIndex, *ensPuc, dir, n, p, potager) == 0) || (presenceInsecteDirection(puceronIndex, *ensPuc, dir, n, p, potager) == 1))
     {
-        for (int k = 1; k < 9; k++) // cas ou il y a des tomates ET pas d'insectes
+        for (int k = 1; k < 10; k++) // cas ou il y a des tomates ET pas d'insectes
         {
             if (((k != dir) || (k == 5)) && ((presenceTomateMangeableDirection(puceronIndex, *ensPuc, k, n, p, potager) == 1) && (presenceInsecteDirection(puceronIndex, *ensPuc, k, n, p, potager) == 0)))
             {
@@ -323,11 +323,13 @@ void reorientationPuceron2(int puceronIndex, ensemblePuceron *ensPuc, int n, int
         }
         else
         {
-            for (int k = 1; k < 9; k++) // cas ou il n'y a pas de tomate ET pas d'insectes
+            for (int k = 1; k < 10; k++) // cas ou il n'y a pas de tomate ET pas d'insectes
             {
                 if (((k != dir) || (k == 5)) && ((presenceInsecteDirection(puceronIndex, *ensPuc, k, n, p, potager) == 0)))
+                {
                     tab[longueurtab] = k;
-                longueurtab++;
+                    longueurtab++;
+                }
             }
             if (longueurtab != 0) // puceron a trouvé une case sans insecte
             {

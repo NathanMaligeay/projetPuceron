@@ -2,7 +2,6 @@
 
 ensemblePuceron creerEnsemblePuceron(int n, int ligne, int colonne, Case potager[ligne][colonne])
 {
-    //Puceron tab[LIGNE * COLONNE];
     ensemblePuceron ensPuc;
     apparitionPuceron(n, &ensPuc, ligne, colonne, potager);
     ensPuc.nbPuceron = n;
